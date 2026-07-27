@@ -1,0 +1,17 @@
+services:
+  web:
+    profiles:
+      - disabled
+
+  portfolio-dev:
+    container_name: portfolio-dev
+    build:
+      context: .
+      dockerfile: docker/config/Dockerfile.dev
+    ports:
+      - "${VITE_PORT:-5173}:5173"
+    volumes:
+      - .:/app
+      - /app/node_modules
+    environment:
+      - NODE_ENV=development

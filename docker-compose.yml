@@ -1,0 +1,19 @@
+services:
+  web:
+    container_name: portfolio-web
+    build:
+      context: .
+      dockerfile: docker/config/Dockerfile
+    restart: always
+    deploy:
+      resources:
+        limits:
+          memory: 128M
+        reservations:
+          memory: 64M
+    networks:
+      - proxy-network
+
+networks:
+  proxy-network:
+    external: true

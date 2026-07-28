@@ -9,14 +9,19 @@
   --color-bg-main: #0b0c0e;
   --color-surface-card: #16181d;
   --color-border-custom: #262931;
-  --color-accent-neon: #a3e635;
-  --color-text-primary: #ededed;
-  --color-text-secondary: #8a8f9d;
+  --color-accent: #a3e635;
+  --color-primary: #ededed;
+  --color-secondary: #8a8f9d;
+}
+
+html {
+  scroll-behavior: smooth;
+  scroll-padding-top: 4rem;
 }
 
 body {
   background-color: var(--color-bg-main);
-  color: var(--color-text-primary);
+  color: var(--color-primary);
   font-family: var(--font-sans);
   margin: 0;
   padding: 0;

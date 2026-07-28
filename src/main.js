@@ -38,10 +38,18 @@ if (mobileMenu) {
 // Scroll Effects (Navbar style change on scroll)
 window.addEventListener("scroll", () => {
   if (window.scrollY > 20) {
-    navbar.classList.add("border-border-custom/80", "bg-[#0b0c0e]/95", "shadow-lg");
+    navbar.classList.add(
+      "border-border-custom/80",
+      "bg-[#0b0c0e]/95",
+      "shadow-lg",
+    );
     navbar.classList.remove("border-border-custom/30", "bg-[#0b0c0e]/80");
   } else {
-    navbar.classList.remove("border-border-custom/80", "bg-[#0b0c0e]/95", "shadow-lg");
+    navbar.classList.remove(
+      "border-border-custom/80",
+      "bg-[#0b0c0e]/95",
+      "shadow-lg",
+    );
     navbar.classList.add("border-border-custom/30", "bg-[#0b0c0e]/80");
   }
 });
@@ -56,7 +64,10 @@ window.addEventListener("scroll", () => {
   sections.forEach((section) => {
     const sectionTop = section.offsetTop - 80; // Offset for navbar height
     const sectionHeight = section.offsetHeight;
-    if (window.scrollY >= sectionTop && window.scrollY < sectionTop + sectionHeight) {
+    if (
+      window.scrollY >= sectionTop &&
+      window.scrollY < sectionTop + sectionHeight
+    ) {
       currentSectionId = section.getAttribute("id");
     }
   });
@@ -95,19 +106,15 @@ function typeText(element, text, speed = 80) {
 async function startTerminalAnimation() {
   const cmd1 = document.getElementById("term-cmd-1");
   const out1 = document.getElementById("term-out-1");
-  
+
   const cmd2Line = document.getElementById("term-line-cmd-2");
   const cmd2 = document.getElementById("term-cmd-2");
   const out2 = document.getElementById("term-out-2");
-  
+
   const cmd3Line = document.getElementById("term-line-cmd-3");
   const cmd3 = document.getElementById("term-cmd-3");
   const out3 = document.getElementById("term-out-3");
 
-  const cmd4Line = document.getElementById("term-line-cmd-4");
-  const cmd4 = document.getElementById("term-cmd-4");
-  const out4 = document.getElementById("term-out-4");
-  
   const activePrompt = document.getElementById("term-prompt-active");
 
   if (!cmd1) return;
@@ -116,14 +123,11 @@ async function startTerminalAnimation() {
   cmd1.textContent = "";
   cmd2.textContent = "";
   cmd3.textContent = "";
-  cmd4.textContent = "";
   out1.classList.add("hidden");
   cmd2Line.classList.add("hidden");
   out2.classList.add("hidden");
   cmd3Line.classList.add("hidden");
   out3.classList.add("hidden");
-  cmd4Line.classList.add("hidden");
-  out4.classList.add("hidden");
   activePrompt.classList.add("hidden");
 
   // Step 1: Type whoami
@@ -143,25 +147,16 @@ async function startTerminalAnimation() {
   await new Promise((resolve) => setTimeout(resolve, 250));
   out2.classList.remove("hidden");
 
-  // Step 5: Show line and type stack --backend
+  // Step 5: Show line and type status --availability
   await new Promise((resolve) => setTimeout(resolve, 600));
   cmd3Line.classList.remove("hidden");
-  await typeText(cmd3, "stack --backend");
+  await typeText(cmd3, "status --availability");
 
-  // Step 6: Show backend stack output
+  // Step 6: Show availability output
   await new Promise((resolve) => setTimeout(resolve, 250));
   out3.classList.remove("hidden");
 
-  // Step 7: Show line and type stack --frontend
-  await new Promise((resolve) => setTimeout(resolve, 600));
-  cmd4Line.classList.remove("hidden");
-  await typeText(cmd4, "stack --frontend");
-
-  // Step 8: Show frontend stack output
-  await new Promise((resolve) => setTimeout(resolve, 250));
-  out4.classList.remove("hidden");
-
-  // Step 9: Show trailing active cursor
+  // Step 7: Show trailing active cursor
   await new Promise((resolve) => setTimeout(resolve, 400));
   activePrompt.classList.remove("hidden");
 }
@@ -179,7 +174,7 @@ document.addEventListener("DOMContentLoaded", () => {
           }
         });
       },
-      { threshold: 0.15 }
+      { threshold: 0.15 },
     );
     observer.observe(aboutMeSection);
   }
@@ -192,20 +187,23 @@ document.addEventListener("DOMContentLoaded", () => {
   if (btnCopyEmail) {
     btnCopyEmail.addEventListener("click", () => {
       const email = atob(encodedEmail);
-      navigator.clipboard.writeText(email).then(() => {
-        const label = btnCopyEmail.querySelector("span");
-        if (label) {
-          const originalText = label.textContent;
-          label.textContent = "¡Copiado!";
-          btnCopyEmail.classList.add("bg-accent/80");
-          setTimeout(() => {
-            label.textContent = originalText;
-            btnCopyEmail.classList.remove("bg-accent/80");
-          }, 2000);
-        }
-      }).catch(err => {
-        console.error("No se pudo copiar el correo: ", err);
-      });
+      navigator.clipboard
+        .writeText(email)
+        .then(() => {
+          const label = btnCopyEmail.querySelector("span");
+          if (label) {
+            const originalText = label.textContent;
+            label.textContent = "¡Copiado!";
+            btnCopyEmail.classList.add("bg-accent/80");
+            setTimeout(() => {
+              label.textContent = originalText;
+              btnCopyEmail.classList.remove("bg-accent/80");
+            }, 2000);
+          }
+        })
+        .catch((err) => {
+          console.error("No se pudo copiar el correo: ", err);
+        });
     });
   }
 
@@ -216,4 +214,3 @@ document.addEventListener("DOMContentLoaded", () => {
     });
   }
 });
-

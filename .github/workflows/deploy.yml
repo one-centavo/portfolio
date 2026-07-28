@@ -39,7 +39,7 @@ jobs:
 
             # 3. Principal Action: Building and Starting the Infrastructure
             echo "🏗️ Building and starting containers in production..."
-            docker compose up -d --build
+            docker compose -f docker-compose.yml up -d --build
 
             # 4. Health Check: Ensure the container is up and running
             echo "🔍 Verifying container status..."
@@ -47,7 +47,7 @@ jobs:
               echo "✅ Container portfolio-web is running successfully!"
             else
               echo "❌ ERROR: Container portfolio-web is not running."
-              docker compose logs web
+              docker compose -f docker-compose.yml logs web
               exit 1
             fi
 

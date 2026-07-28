@@ -183,5 +183,37 @@ document.addEventListener("DOMContentLoaded", () => {
     );
     observer.observe(aboutMeSection);
   }
+
+  // Email Obfuscation & Interaction
+  const encodedEmail = "Z3VzdGF2b2Fkb2xmb2NhYnJlcmExNUBnbWFpbC5jb20="; // gustavoadolfocabrera15@gmail.com in base64
+  const btnCopyEmail = document.getElementById("btn-copy-email");
+  const btnSendEmail = document.getElementById("btn-send-email");
+
+  if (btnCopyEmail) {
+    btnCopyEmail.addEventListener("click", () => {
+      const email = atob(encodedEmail);
+      navigator.clipboard.writeText(email).then(() => {
+        const label = btnCopyEmail.querySelector("span");
+        if (label) {
+          const originalText = label.textContent;
+          label.textContent = "¡Copiado!";
+          btnCopyEmail.classList.add("bg-accent/80");
+          setTimeout(() => {
+            label.textContent = originalText;
+            btnCopyEmail.classList.remove("bg-accent/80");
+          }, 2000);
+        }
+      }).catch(err => {
+        console.error("No se pudo copiar el correo: ", err);
+      });
+    });
+  }
+
+  if (btnSendEmail) {
+    btnSendEmail.addEventListener("click", () => {
+      const email = atob(encodedEmail);
+      window.location.href = `mailto:${email}`;
+    });
+  }
 });
 

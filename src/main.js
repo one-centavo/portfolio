@@ -1,60 +1,74 @@
-import './style.css'
-import javascriptLogo from './assets/javascript.svg'
-import viteLogo from './assets/vite.svg'
-import heroImg from './assets/hero.png'
-import { setupCounter } from './counter.js'
+import "./style.css";
 
-document.querySelector('#app').innerHTML = `
-<section id="center">
-  <div class="hero">
-    <img src="${heroImg}" class="base" width="170" height="179">
-    <img src="${javascriptLogo}" class="framework" alt="JavaScript logo"/>
-    <img src="${viteLogo}" class="vite" alt="Vite logo" />
-  </div>
-  <div>
-    <h1>Get started</h1>
-    <p>Edit <code>src/main.js</code> and save to test <code>HMR</code></p>
-  </div>
-  <button id="counter" type="button" class="counter"></button>
-</section>
+// DOM Elements
+const navbar = document.getElementById("navbar");
+const mobileMenuBtn = document.getElementById("mobile-menu-btn");
+const mobileMenu = document.getElementById("mobile-menu");
+const mobileMenuCloseBtn = document.getElementById("mobile-menu-close-btn");
 
-<div class="ticks"></div>
+// Mobile Menu Toggle
+if (mobileMenuBtn && mobileMenu) {
+  mobileMenuBtn.addEventListener("click", () => {
+    mobileMenu.classList.remove("hidden");
+    mobileMenu.classList.add("flex");
+    document.body.classList.add("overflow-hidden");
+  });
+}
 
-<section id="next-steps">
-  <div id="docs">
-    <svg class="icon" role="presentation" aria-hidden="true"><use href="/icons.svg#documentation-icon"></use></svg>
-    <h2>Documentation</h2>
-    <p>Your questions, answered</p>
-    <ul>
-      <li>
-        <a href="https://vite.dev/" target="_blank">
-          <img class="logo" src="${viteLogo}" alt="" />
-          Explore Vite
-        </a>
-      </li>
-      <li>
-        <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript" target="_blank">
-          <img class="button-icon" src="${javascriptLogo}" alt="">
-          Learn more
-        </a>
-      </li>
-    </ul>
-  </div>
-  <div id="social">
-    <svg class="icon" role="presentation" aria-hidden="true"><use href="/icons.svg#social-icon"></use></svg>
-    <h2>Connect with us</h2>
-    <p>Join the Vite community</p>
-    <ul>
-      <li><a href="https://github.com/vitejs/vite" target="_blank"><svg class="button-icon" role="presentation" aria-hidden="true"><use href="/icons.svg#github-icon"></use></svg>GitHub</a></li>
-      <li><a href="https://chat.vite.dev/" target="_blank"><svg class="button-icon" role="presentation" aria-hidden="true"><use href="/icons.svg#discord-icon"></use></svg>Discord</a></li>
-      <li><a href="https://x.com/vite_js" target="_blank"><svg class="button-icon" role="presentation" aria-hidden="true"><use href="/icons.svg#x-icon"></use></svg>X.com</a></li>
-      <li><a href="https://bsky.app/profile/vite.dev" target="_blank"><svg class="button-icon" role="presentation" aria-hidden="true"><use href="/icons.svg#bluesky-icon"></use></svg>Bluesky</a></li>
-    </ul>
-  </div>
-</section>
+if (mobileMenuCloseBtn && mobileMenu) {
+  mobileMenuCloseBtn.addEventListener("click", () => {
+    mobileMenu.classList.add("hidden");
+    mobileMenu.classList.remove("flex");
+    document.body.classList.remove("overflow-hidden");
+  });
+}
 
-<div class="ticks"></div>
-<section id="spacer"></section>
-`
+if (mobileMenu) {
+  // Close mobile menu when clicking a link
+  const mobileLinks = mobileMenu.querySelectorAll("a");
+  mobileLinks.forEach((link) => {
+    link.addEventListener("click", () => {
+      mobileMenu.classList.add("hidden");
+      mobileMenu.classList.remove("flex");
+      document.body.classList.remove("overflow-hidden");
+    });
+  });
+}
 
-setupCounter(document.querySelector('#counter'))
+// Scroll Effects (Navbar style change on scroll)
+window.addEventListener("scroll", () => {
+  if (window.scrollY > 20) {
+    navbar.classList.add("border-border-custom/80", "bg-[#0b0c0e]/95", "shadow-lg");
+    navbar.classList.remove("border-border-custom/30", "bg-[#0b0c0e]/80");
+  } else {
+    navbar.classList.remove("border-border-custom/80", "bg-[#0b0c0e]/95", "shadow-lg");
+    navbar.classList.add("border-border-custom/30", "bg-[#0b0c0e]/80");
+  }
+});
+
+// Scrollspy (Active section highlight)
+const sections = document.querySelectorAll("section[id]");
+const navLinks = document.querySelectorAll("#desktop-nav a, #mobile-nav a");
+
+window.addEventListener("scroll", () => {
+  let currentSectionId = "";
+
+  sections.forEach((section) => {
+    const sectionTop = section.offsetTop - 80; // Offset for navbar height
+    const sectionHeight = section.offsetHeight;
+    if (window.scrollY >= sectionTop && window.scrollY < sectionTop + sectionHeight) {
+      currentSectionId = section.getAttribute("id");
+    }
+  });
+
+  navLinks.forEach((link) => {
+    const href = link.getAttribute("href");
+    if (href === `#${currentSectionId}`) {
+      link.classList.remove("text-secondary");
+      link.classList.add("text-accent");
+    } else {
+      link.classList.remove("text-accent");
+      link.classList.add("text-secondary");
+    }
+  });
+});

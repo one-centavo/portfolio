@@ -1,1 +1,29 @@
+@import url('https://fonts.googleapis.com/css2?family=Fira+Code:wght@300..700&family=Space+Grotesk:wght@300..700&display=swap');
+
 @import "tailwindcss";
+
+@theme {
+  --font-mono: "Fira Code", monospace;
+  --font-sans: "Space Grotesk", sans-serif;
+
+  --color-bg-main: #0b0c0e;
+  --color-surface-card: #16181d;
+  --color-border-custom: #262931;
+  --color-accent: #a3e635;
+  --color-primary: #ededed;
+  --color-secondary: #8a8f9d;
+}
+
+html {
+  scroll-behavior: smooth;
+  scroll-padding-top: 4rem;
+}
+
+body {
+  background-color: var(--color-bg-main);
+  color: var(--color-primary);
+  font-family: var(--font-sans);
+  margin: 0;
+  padding: 0;
+  overflow-x: hidden;
+}

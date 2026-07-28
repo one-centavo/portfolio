@@ -49,8 +49,8 @@ Create my personal portfolio for presenting about me, my proyects, skills and co
 
 - **Aesthetic**: Dark Terminal / Hacker Minimalist
 - **Fonts**:
-  - Monospace: 'JetBrains Mono', monospace (for titles, headers, badges, terminal)
-  - Sans: 'Geist', 'Plus Jakarta Sans' (for long descriptions)
+  - Monospace: 'Fira Code', monospace (for titles, headers, badges, terminal)
+  - Sans: 'Space Grotesk', sans-serif (for long descriptions)
 - **Color Palette (Tailwind CSS)**:
   - Background: `#0b0c0e` (main page background)
   - Surface Cards: `#16181d` (project cards, containers)

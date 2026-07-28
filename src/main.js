@@ -72,3 +72,116 @@ window.addEventListener("scroll", () => {
     }
   });
 });
+
+// Terminal Typing Animation for About Me Section
+function typeText(element, text, speed = 80) {
+  return new Promise((resolve) => {
+    let i = 0;
+    element.classList.add("border-r-2"); // Make typing caret visible
+    function type() {
+      if (i < text.length) {
+        element.textContent += text.charAt(i);
+        i++;
+        setTimeout(type, speed + Math.random() * 40); // Tiny random delay variance for realism
+      } else {
+        element.classList.remove("border-r-2"); // Hide typing caret when done
+        resolve();
+      }
+    }
+    type();
+  });
+}
+
+async function startTerminalAnimation() {
+  const cmd1 = document.getElementById("term-cmd-1");
+  const out1 = document.getElementById("term-out-1");
+  
+  const cmd2Line = document.getElementById("term-line-cmd-2");
+  const cmd2 = document.getElementById("term-cmd-2");
+  const out2 = document.getElementById("term-out-2");
+  
+  const cmd3Line = document.getElementById("term-line-cmd-3");
+  const cmd3 = document.getElementById("term-cmd-3");
+  const out3 = document.getElementById("term-out-3");
+
+  const cmd4Line = document.getElementById("term-line-cmd-4");
+  const cmd4 = document.getElementById("term-cmd-4");
+  const out4 = document.getElementById("term-out-4");
+  
+  const activePrompt = document.getElementById("term-prompt-active");
+
+  if (!cmd1) return;
+
+  // Clear any existing content for restart support
+  cmd1.textContent = "";
+  cmd2.textContent = "";
+  cmd3.textContent = "";
+  cmd4.textContent = "";
+  out1.classList.add("hidden");
+  cmd2Line.classList.add("hidden");
+  out2.classList.add("hidden");
+  cmd3Line.classList.add("hidden");
+  out3.classList.add("hidden");
+  cmd4Line.classList.add("hidden");
+  out4.classList.add("hidden");
+  activePrompt.classList.add("hidden");
+
+  // Step 1: Type whoami
+  await new Promise((resolve) => setTimeout(resolve, 500));
+  await typeText(cmd1, "whoami");
+
+  // Step 2: Show whoami output
+  await new Promise((resolve) => setTimeout(resolve, 250));
+  out1.classList.remove("hidden");
+
+  // Step 3: Show line and type curl ipinfo.io/city
+  await new Promise((resolve) => setTimeout(resolve, 600));
+  cmd2Line.classList.remove("hidden");
+  await typeText(cmd2, "curl ipinfo.io/city");
+
+  // Step 4: Show location output
+  await new Promise((resolve) => setTimeout(resolve, 250));
+  out2.classList.remove("hidden");
+
+  // Step 5: Show line and type stack --backend
+  await new Promise((resolve) => setTimeout(resolve, 600));
+  cmd3Line.classList.remove("hidden");
+  await typeText(cmd3, "stack --backend");
+
+  // Step 6: Show backend stack output
+  await new Promise((resolve) => setTimeout(resolve, 250));
+  out3.classList.remove("hidden");
+
+  // Step 7: Show line and type stack --frontend
+  await new Promise((resolve) => setTimeout(resolve, 600));
+  cmd4Line.classList.remove("hidden");
+  await typeText(cmd4, "stack --frontend");
+
+  // Step 8: Show frontend stack output
+  await new Promise((resolve) => setTimeout(resolve, 250));
+  out4.classList.remove("hidden");
+
+  // Step 9: Show trailing active cursor
+  await new Promise((resolve) => setTimeout(resolve, 400));
+  activePrompt.classList.remove("hidden");
+}
+
+// Trigger animation when About Me section is in view
+document.addEventListener("DOMContentLoaded", () => {
+  const aboutMeSection = document.getElementById("about-me");
+  if (aboutMeSection) {
+    const observer = new IntersectionObserver(
+      (entries) => {
+        entries.forEach((entry) => {
+          if (entry.isIntersecting) {
+            startTerminalAnimation();
+            observer.unobserve(entry.target); // Animate once
+          }
+        });
+      },
+      { threshold: 0.15 }
+    );
+    observer.observe(aboutMeSection);
+  }
+});
+
